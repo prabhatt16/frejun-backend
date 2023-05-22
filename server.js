@@ -66,14 +66,16 @@ app.post("/edituser/:id", bodyParser.json(), function (req, res) {
     const sql = "SELECT * FROM Users WHERE id = ?";
     db.query(sql, [id], (err, result) => {
         if (err) {
+        
             return res.status(500).send({ error: err.message }); 
         } else {
-            const sql = "UPDATE Users SET name = ? age = ? mobile = ? country = ? WHERE (id = ?)";
+            const sql = "UPDATE Users SET name = ?, age = ?, mobile = ?, country = ? WHERE (id = ?)";
             db.query(sql, [body.name,body.age,body.mobile, body.country, id], err => {
                 if (err) {
                     return res.status(400).send({ error: err.message }); 
+                }else{
+                    return res.status(200).send("successfully updated!");
                 }
-                res.status(200).send("successfully updated!");
             });
         }
     });
